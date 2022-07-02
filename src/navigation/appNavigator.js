@@ -9,9 +9,9 @@ import { AuthContext } from '../context/context';
 const appNavigator = () => {
   const [next,setNext] = useState('Login');
 
-  useEffect(()=>{
-    console.log(next)
-  },[])
+  // useEffect(()=>{
+  //   console.log(next)
+  // },[])
 
   const context={
     next,

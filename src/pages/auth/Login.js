@@ -14,8 +14,8 @@ const Login = ({navigation}) => {
 
 
   const {next,getNext} = useContext(AuthContext);
-  console.log('next>>>',next);
-  console.log('getNext',getNext)
+  // console.log('next>>>',next);
+  // console.log('getNext',getNext)
   
 
   const toggleHandler= (value) =>{
@@ -33,11 +33,11 @@ const Login = ({navigation}) => {
   const nextHandler=() =>{
       if(title === 'Login'){
         getNext(title)
-        navigation.navigate('Password');
+        navigation.navigate('Password',{email:email});
         // console.log('next>>>',next)
       }else{
         getNext('Register')
-        navigation.navigate('Password');
+        navigation.navigate('Password',{email:email});
       }
     }
 

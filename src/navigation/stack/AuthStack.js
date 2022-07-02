@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 //COMPONENT
 import LoginScreen from '../../pages/auth/Login';
 import PasswordScreen from '../../pages/password/Password';
+import DashboardScreen from '../../pages/dashboard/Dashboard';
 
 const Stack = createNativeStackNavigator();
 
@@ -16,6 +17,7 @@ const AuthStack = () => {
     >
         <Stack.Screen name="Login" component={LoginScreen}/>
         <Stack.Screen name="Password" component={PasswordScreen}/>
+        <Stack.Screen name="Dashboard" component={DashboardScreen}/>
     </Stack.Navigator>
   )
 }

@@ -1,52 +1,72 @@
-import { View, Text } from 'react-native'
-import React, { useState,useContext } from 'react'
+import React, { useState,useContext,useEffect } from 'react'
+import { View, Text, Button,TouchableOpacity } from 'react-native'
 
 //COMPONENT
 import PasswordHeader from '../../components/password/passwordHeader'
 import { AuthContext } from '../../context/context'
 import Login from '../auth/Login'
 
-const Password = ({navigation}) => {
+
+// SECURE-KEY-STORE
+import RNSecureKeyStore, {ACCESSIBLE} from "react-native-secure-key-store";
+
+
+const Password = ({ navigation, route}) => {
+    const {email} = route.params;
+
     const [password,setPassword] = useState('');
     const [toggleCheckBox,setToggleCheckBox] = useState(false);
-    const [changeText,setChangeText] = useState('Login');
-    const [placeholder,setPlaceholder] = useState('Password....');
-    const [confirmPlaceholder,setConfirmPlaceholder] = useState('Confirm Password....')
-
+    const [confirmPassword,setConfirmPassword] = useState('');
 
     const [security,setSecurity] = useState('Login');
 
     const {next,getNext} = useContext(AuthContext);
 
+    useEffect(()=>{
+        nextHandler();
+    },[])
 
-    // const securityHandler = value => {
-    //     if(next === 'Login'){
-    //         placeholder,
+  const nextHandler = () =>{
+        if(next === 'Login'){
+            setSecurity('Login');
+        }
+         else{
+            setSecurity('Register');
+        }
+    }
 
-    //     }else{
-    //         setPlaceholder(placeholder),
-    //         confirmPlaceholder,
-    //         setChangeText('Register')
-    //     }
-    // }
-    
+    const dashboardHandler = value =>{
+
+        const userData = {
+            email:email,
+            password:password
+        };
+
+            RNSecureKeyStore.set('@user.data',JSON.stringify(userData), {accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY})
+                .then((res) => {
+                    navigation.navigate('Dashboard')
+                    // console.log('userData>>>',userData)
+                    // console.log('email>>>',email)
+                    },(err) => {
+                        console.log(err)
+                    })
+                }
 
     return (
         <View>
             <PasswordHeader
-            passwordValue={password}
-            onChangePassword={value => setPassword(value)}
-            placeholder={placeholder}
+                securityOptions = {security}
 
-            confirmPlaceholder={confirmPlaceholder}
+                passwordValue={password}
+                onChangePassword={value => setPassword(value)}
 
-            toggleCheckBoxValue={toggleCheckBox}
-            onChangeCheckBox={value => setToggleCheckBox(value)}
+                confirmPasswordValue={confirmPassword}
+                onChangeConfirmPassword={value => setConfirmPassword(value)}
+         
+                toggleCheckBoxValue={toggleCheckBox}
+                onChangeCheckBox={value => setToggleCheckBox(value)}
 
-
-            changeText={changeText}
-
-            goLogin={()=>navigation.goBack()}
+                goDashboard={dashboardHandler}
             />
         </View>
     )
