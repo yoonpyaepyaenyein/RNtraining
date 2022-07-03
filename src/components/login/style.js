@@ -7,8 +7,6 @@ import {
 
 const styles = StyleSheet.create({
     container:{
-        // flex:1,
-        // backgroundColor:'red',
         alignItems:'center',
         justifyContent:'center'
     },
@@ -31,7 +29,6 @@ const styles = StyleSheet.create({
         paddingLeft:hp(2)
     },
     btnContainer:{
-        // backgroundColor:'red',
         alignItems:'center',
         justifyContent:'center',
         borderWidth:hp(0.2),

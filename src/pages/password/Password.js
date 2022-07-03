@@ -1,75 +1,95 @@
-import React, { useState,useContext,useEffect } from 'react'
-import { View, Text, Button,TouchableOpacity } from 'react-native'
+import React, {useState, useContext, useEffect} from 'react';
+import {View, ToastAndroid} from 'react-native';
 
 //COMPONENT
-import PasswordHeader from '../../components/password/passwordHeader'
-import { AuthContext } from '../../context/context'
-import Login from '../auth/Login'
-
+import PasswordHeader from '../../components/password/passwordHeader';
+import {AuthContext} from '../../context/context';
+import Login from '../auth/Login';
 
 // SECURE-KEY-STORE
-import RNSecureKeyStore, {ACCESSIBLE} from "react-native-secure-key-store";
+import RNSecureKeyStore, {ACCESSIBLE} from 'react-native-secure-key-store';
 
+const Password = ({navigation, route}) => {
+  const {email} = route.params;
 
-const Password = ({ navigation, route}) => {
-    const {email} = route.params;
+  const [password, setPassword] = useState('');
+  // console.log('password....>>', password);
+  const [toggleCheckBox, setToggleCheckBox] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState('');
 
-    const [password,setPassword] = useState('');
-    const [toggleCheckBox,setToggleCheckBox] = useState(false);
-    const [confirmPassword,setConfirmPassword] = useState('');
+  const [security, setSecurity] = useState('Login');
 
-    const [security,setSecurity] = useState('Login');
+  const {next, getNext, getAuth} = useContext(AuthContext);
 
-    const {next,getNext} = useContext(AuthContext);
+  useEffect(() => {
+    nextHandler();
+  }, []);
 
-    useEffect(()=>{
-        nextHandler();
-    },[])
-
-  const nextHandler = () =>{
-        if(next === 'Login'){
-            setSecurity('Login');
-        }
-         else{
-            setSecurity('Register');
-        }
+  const nextHandler = () => {
+    if (next === 'Login') {
+      setSecurity('Login');
+    } else {
+      setSecurity('Register');
     }
+  };
 
-    const dashboardHandler = value =>{
+  const SignInHandler = () => {
+    RNSecureKeyStore.get('@user.data').then(
+      res => {
+        const getEmail = JSON.parse(res).email;
+        const getPassword = JSON.parse(res).password;
+        if (getEmail === email && getPassword === password) {
+          getAuth(true);
+          // navigation.navigate('Dashboard');
+        } else {
+          ToastAndroid.show('Something Wrong!', ToastAndroid.SHORT);
+        }
+      },
+      err => {
+        console.log(err);
+      },
+    );
+  };
 
-        const userData = {
-            email:email,
-            password:password
-        };
+  const SignUpHandler = () => {
+    const userData = {
+      email: email,
+      password: password,
+    };
+    // console.log('userData>>> .......', userData);
+    RNSecureKeyStore.set('@user.data', JSON.stringify(userData), {
+      accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY,
+    }).then(
+      res => {
+        if (email && confirmPassword === password) {
+          getAuth(true);
+          // navigation.navigate('Dashboard');
+        } else {
+          ToastAndroid.show('Something Wrong', ToastAndroid.SHORT);
+        }
+      },
+      err => {
+        console.log(err);
+        getAuth(false);
+      },
+    );
+  };
 
-            RNSecureKeyStore.set('@user.data',JSON.stringify(userData), {accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY})
-                .then((res) => {
-                    navigation.navigate('Dashboard')
-                    // console.log('userData>>>',userData)
-                    // console.log('email>>>',email)
-                    },(err) => {
-                        console.log(err)
-                    })
-                }
+  return (
+    <View>
+      <PasswordHeader
+        securityOptions={security}
+        passwordValue={password}
+        onChangePassword={value => setPassword(value)}
+        confirmPasswordValue={confirmPassword}
+        onChangeConfirmPassword={value => setConfirmPassword(value)}
+        toggleCheckBoxValue={toggleCheckBox}
+        onChangeCheckBox={value => setToggleCheckBox(value)}
+        logInAction={SignInHandler}
+        registerAction={SignUpHandler}
+      />
+    </View>
+  );
+};
 
-    return (
-        <View>
-            <PasswordHeader
-                securityOptions = {security}
-
-                passwordValue={password}
-                onChangePassword={value => setPassword(value)}
-
-                confirmPasswordValue={confirmPassword}
-                onChangeConfirmPassword={value => setConfirmPassword(value)}
-         
-                toggleCheckBoxValue={toggleCheckBox}
-                onChangeCheckBox={value => setToggleCheckBox(value)}
-
-                goDashboard={dashboardHandler}
-            />
-        </View>
-    )
-    }
-
-export default Password
+export default Password;
