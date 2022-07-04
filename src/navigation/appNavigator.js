@@ -13,6 +13,8 @@ import DashboardStack from './stack/DashboardStack';
 const appNavigator = () => {
   const [next, setNext] = useState('Login');
   const [auth, setAuth] = useState(false);
+  const [splash, setSplash] = useState(true);
+  const [lang, setLang] = useState('en');
 
   useEffect(() => {
     getData();
@@ -20,22 +22,43 @@ const appNavigator = () => {
 
   const context = {
     auth,
+    getAuth: value => {
+      setAuth(value);
+    },
+
     next,
     getNext: value => {
       setNext(value);
     },
-    getAuth: value => {
-      setAuth(value);
+
+    lang,
+    changeLanguage: value => {
+      setLang(value);
     },
   };
 
   const getData = () => {
+    RNSecureKeyStore.get('@language').then(
+      res => {
+        setLang(res);
+      },
+      err => {
+        console.log(err);
+      },
+    );
+
     RNSecureKeyStore.get('@user.data').then(
       res => {
         if (res) {
           console.log('res.....', res);
           setAuth(true);
+          setTimeout(() => {
+            setSplash(false);
+          }, 2000);
         } else {
+          setTimeout(() => {
+            setSplash(false);
+          });
           setAuth(false);
         }
       },
@@ -46,7 +69,13 @@ const appNavigator = () => {
     );
   };
 
-  if (auth) {
+  if (splash) {
+    return (
+      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+        <Text>Welcome to our app</Text>
+      </View>
+    );
+  } else if (auth) {
     return (
       <AuthContext.Provider value={context}>
         <NavigationContainer>

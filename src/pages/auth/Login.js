@@ -1,29 +1,30 @@
 import React, {useState, useContext} from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, TouchableOpacity} from 'react-native';
+
+// SECURE-KEY-STORE
+import RNSecureKeyStore, {ACCESSIBLE} from 'react-native-secure-key-store';
 
 //COMPONENT
 import LoginHeader from '../../components/login/loginHeader';
 import {AuthContext} from '../../context/context';
+import {useLocal} from '../../hook/useLocal';
+import styles from './Style';
+import AlertModal from '../../components/alert/alertModal';
 
 const Login = ({navigation}) => {
+  const local = useLocal();
+
   const [email, setEmail] = useState('');
   const [title, setTitle] = useState('Login');
-  const [question, setQuestion] = useState('You do not have an account please');
-  const [toggle, setToggle] = useState(' Register');
+  const [showModal, setShowModal] = useState(false);
 
-  const {next, getNext} = useContext(AuthContext);
-  // console.log('next>>>',next);
-  // console.log('getNext',getNext)
+  const {next, getNext, lang, changeLanguage} = useContext(AuthContext);
 
   const toggleHandler = value => {
     if (title === 'Login') {
       setTitle('Register');
-      setQuestion('You already have an account please');
-      setToggle(' Login');
     } else {
       setTitle('Login');
-      setToggle(' Register');
-      setQuestion('You do not have an account please');
     }
   };
 
@@ -38,17 +39,30 @@ const Login = ({navigation}) => {
     }
   };
 
+  const languageHandler = value => {
+    setShowModal(value);
+  };
+
   return (
-    <View>
+    <View style={styles.container}>
+      <View style={styles.headerStyle}>
+        <TouchableOpacity
+          style={{padding: 5}}
+          onPress={() => languageHandler(true)}>
+          {lang === 'en' ? <Text>English</Text> : <Text>Myanmar</Text>}
+        </TouchableOpacity>
+      </View>
+
       <LoginHeader
-        titleHeader={title}
         emailValue={email}
         onChangeEmail={value => setEmail(value)}
         goSecurity={nextHandler}
         handleToggle={toggleHandler}
-        question={question}
-        questionHeader={toggle}
+        action={title}
       />
+
+      {/* Modal */}
+      {showModal && <AlertModal closeModal={value => languageHandler(value)} />}
     </View>
   );
 };

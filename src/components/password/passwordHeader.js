@@ -7,16 +7,19 @@ import styles from './style';
 //LIBRARY
 import CheckBox from '@react-native-community/checkbox';
 
+//COMPONENT
+import {useLocal} from '../../hook/useLocal';
+
 const PasswordHeader = props => {
-  // console.log(props.securityOptions)
+  const local = useLocal();
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Security</Text>
+      <Text style={styles.title}>{local.security}</Text>
 
       <View style={styles.inputContainer}>
         <TextInput
           value={props.passwordValue}
-          placeholder="Password....."
+          placeholder={local.passwordPlaceholder}
           onChangeText={props.onChangePassword}
           style={styles.passwordInput}
           secureTextEntry={true}
@@ -30,14 +33,14 @@ const PasswordHeader = props => {
               onValueChange={props.onChangeCheckBox}
               style={styles.checkbox}
             />
-            <Text style={styles.checkboxTitle}>Remember Password</Text>
+            <Text style={styles.checkboxTitle}>{local.RememberPsw}</Text>
           </View>
         ) : null}
 
         {props.securityOptions === 'Register' ? (
           <TextInput
             value={props.confirmPasswordValue}
-            placeholder="Confirm Password....."
+            placeholder={local.confirmPasswordPlaceholder}
             onChangeText={props.onChangeConfirmPassword}
             style={styles.passwordInput}
             secureTextEntry={true}
@@ -48,11 +51,11 @@ const PasswordHeader = props => {
       <View style={styles.btnContainer}>
         {props.securityOptions === 'Login' ? (
           <TouchableOpacity onPress={props.logInAction}>
-            <Text style={styles.btnTitle}>Login</Text>
+            <Text style={styles.btnTitle}>{local.login}</Text>
           </TouchableOpacity>
         ) : (
           <TouchableOpacity onPress={props.registerAction}>
-            <Text style={styles.btnTitle}>Register</Text>
+            <Text style={styles.btnTitle}>{local.register}</Text>
           </TouchableOpacity>
         )}
       </View>
