@@ -13,7 +13,6 @@ const Password = ({navigation, route}) => {
   const {email} = route.params;
 
   const [password, setPassword] = useState('');
-  // console.log('password....>>', password);
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState('');
 
@@ -34,42 +33,65 @@ const Password = ({navigation, route}) => {
   };
 
   const SignInHandler = () => {
+    const token = '1234567890';
+
     RNSecureKeyStore.get('@user.data').then(
       res => {
         const getEmail = JSON.parse(res).email;
         const getPassword = JSON.parse(res).password;
         if (getEmail === email && getPassword === password) {
           getAuth(true);
-          // navigation.navigate('Dashboard');
+
+          RNSecureKeyStore.set('@token', token, {
+            accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY,
+          }).then(
+            res => {
+              console.log(res);
+            },
+            err => {
+              console.log(err);
+            },
+          );
         } else {
           ToastAndroid.show('Something Wrong!', ToastAndroid.SHORT);
         }
       },
       err => {
-        console.log(err);
+        // console.log(err);
       },
     );
   };
 
   const SignUpHandler = () => {
+    const token = '1234567890';
+
     const userData = {
       email: email,
       password: password,
     };
-    // console.log('userData>>> .......', userData);
+    RNSecureKeyStore.set('@token', token, {
+      accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY,
+    }).then(
+      res => {
+        console.log(res);
+      },
+      err => {
+        // console.log(err);
+      },
+    );
+
     RNSecureKeyStore.set('@user.data', JSON.stringify(userData), {
       accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY,
     }).then(
       res => {
         if (email && confirmPassword === password) {
           getAuth(true);
-          // navigation.navigate('Dashboard');
         } else {
           ToastAndroid.show('Something Wrong', ToastAndroid.SHORT);
         }
       },
       err => {
-        console.log(err);
+        // console.log(err);
         getAuth(false);
       },
     );

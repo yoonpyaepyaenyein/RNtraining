@@ -30,12 +30,9 @@ const styles = StyleSheet.create({
   },
   checkboxContainer: {
     alignItems: 'center',
-    // backgroundColor:'red',
     flexDirection: 'row',
     marginRight: hp(15),
     marginTop: hp(2),
-
-    // paddingHorizontal:wp(4)
   },
   checkbox: {
     color: '#6B778A',

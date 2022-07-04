@@ -18,7 +18,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderColor: '#C3E0C3',
     borderWidth: hp(0.1),
-    justifyContent: 'center',
+    alignItems: 'center',
+    // justifyContent: 'center',
     shadowOffset: {width: 0, height: 5},
     shadowColor: '#74B873',
     shadowOpacity: hp(0.6),
@@ -36,7 +37,6 @@ const styles = StyleSheet.create({
     marginTop: wp(4),
   },
   logoutContainer: {
-    // backgroundColor:'red',
     marginTop: hp(30),
     alignItems: 'center',
     justifyContent: 'center',

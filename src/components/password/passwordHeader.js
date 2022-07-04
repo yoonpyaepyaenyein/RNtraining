@@ -64,7 +64,3 @@ const PasswordHeader = props => {
 };
 
 export default PasswordHeader;
-
-// <TouchableOpacity onPress={props.goDashboard}>
-//           <Text style={styles.btnTitle}>{props.securityOptions === 'Login' ? 'Login' : 'Register'}</Text>
-//         </TouchableOpacity>

@@ -9,7 +9,6 @@ import {AuthContext} from '../../context/context';
 
 const Dashboard = () => {
   const [email, setEmail] = useState('');
-  // console.log('email>>>',email)
 
   const {auth, getAuth} = useContext(AuthContext);
 
@@ -18,6 +17,14 @@ const Dashboard = () => {
   }, []);
 
   const goBackHandler = () => {
+    RNSecureKeyStore.remove('@token').then(
+      res => {
+        console.log(res);
+      },
+      err => {
+        // console.log(err);
+      },
+    );
     getAuth(false);
   };
 
@@ -27,7 +34,7 @@ const Dashboard = () => {
         setEmail(JSON.parse(res).email);
       },
       err => {
-        console.log(err);
+        // console.log(err);
       },
     );
   };

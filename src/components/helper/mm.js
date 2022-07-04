@@ -11,4 +11,5 @@ export default {
   RememberPsw: 'မှတ်မိပါသလား',
   security: 'လုံခြုံရေး',
   email: 'အီးမေးလ်',
+  logout: 'ထွက်မည်',
 };

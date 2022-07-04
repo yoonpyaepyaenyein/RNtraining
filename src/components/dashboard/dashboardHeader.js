@@ -22,7 +22,7 @@ const DashboardHeader = props => {
       </View>
       <View style={styles.logoutContainer}>
         <TouchableOpacity style={styles.logout} onPress={props.goBack}>
-          <Text style={styles.logoutTitle}>Go Back</Text>
+          <Text style={styles.logoutTitle}>{local.logout}</Text>
         </TouchableOpacity>
       </View>
     </View>

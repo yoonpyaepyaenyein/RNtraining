@@ -47,7 +47,7 @@ const appNavigator = () => {
       },
     );
 
-    RNSecureKeyStore.get('@user.data').then(
+    RNSecureKeyStore.get('@token').then(
       res => {
         if (res) {
           console.log('res.....', res);
@@ -64,6 +64,9 @@ const appNavigator = () => {
       },
       err => {
         console.log(err);
+        setTimeout(() => {
+          setSplash(false);
+        });
         setAuth(false);
       },
     );

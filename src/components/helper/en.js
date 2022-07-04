@@ -11,4 +11,5 @@ export default {
   RememberPsw: 'Remember Password',
   security: 'Security',
   email: 'Email',
+  logout: 'Logout',
 };
