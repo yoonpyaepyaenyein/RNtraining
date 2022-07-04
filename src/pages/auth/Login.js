@@ -49,7 +49,11 @@ const Login = ({navigation}) => {
         <TouchableOpacity
           style={{padding: 5}}
           onPress={() => languageHandler(true)}>
-          {lang === 'en' ? <Text>English</Text> : <Text>Myanmar</Text>}
+          {lang === 'en' ? (
+            <Text style={{color: '#74B873'}}>English</Text>
+          ) : (
+            <Text style={{color: '#74B873'}}>Myanmar</Text>
+          )}
         </TouchableOpacity>
       </View>
 

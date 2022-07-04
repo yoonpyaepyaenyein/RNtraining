@@ -25,7 +25,7 @@ const alertModal = props => {
       accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY,
     }).then(
       res => {
-        console.log(res);
+        // console.log(res);
       },
       err => {
         console.log(err);

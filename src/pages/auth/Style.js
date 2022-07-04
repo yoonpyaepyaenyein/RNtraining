@@ -7,7 +7,8 @@ import {
 
 const styles = StyleSheet.create({
   container: {
-    // backgroundColor: 'red',
+    backgroundColor: '#FFFFFF',
+    flex: 1,
   },
   headerStyle: {
     // backgroundColor: 'red',
