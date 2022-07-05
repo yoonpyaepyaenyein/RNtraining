@@ -1,14 +1,23 @@
-import {View, Text} from 'react-native';
+import {View, Text, Image} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 
+import {
+  heightPercentageToDP as hp,
+  widthPercentageToDP as wp,
+} from 'react-native-responsive-screen';
+
 //API
 import RNSecureKeyStore, {ACCESSIBLE} from 'react-native-secure-key-store';
+
+//STYLE
+import styles from '../components/splash/splash';
 
 //COMPONENT
 import AuthStack from './stack/AuthStack';
 import {AuthContext} from '../context/context';
 import DashboardStack from './stack/DashboardStack';
+import Splash from '../components/splash/splash';
 
 const appNavigator = () => {
   const [next, setNext] = useState('Login');
@@ -50,7 +59,7 @@ const appNavigator = () => {
     RNSecureKeyStore.get('@token').then(
       res => {
         if (res) {
-          console.log('res.....', res);
+          // console.log('res.....', res);
           setAuth(true);
           setTimeout(() => {
             setSplash(false);
@@ -58,26 +67,21 @@ const appNavigator = () => {
         } else {
           setTimeout(() => {
             setSplash(false);
-          });
+          }, 2000);
           setAuth(false);
         }
       },
       err => {
-        console.log(err);
         setTimeout(() => {
           setSplash(false);
-        });
+        }, 2000);
         setAuth(false);
       },
     );
   };
 
   if (splash) {
-    return (
-      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-        <Text>Welcome to our app</Text>
-      </View>
-    );
+    return <Splash />;
   } else if (auth) {
     return (
       <AuthContext.Provider value={context}>

@@ -28,7 +28,7 @@ const alertModal = props => {
         // console.log(res);
       },
       err => {
-        console.log(err);
+        // console.log(err);
       },
     );
   };
@@ -45,7 +45,7 @@ const alertModal = props => {
         console.log(res);
       },
       err => {
-        console.log(err);
+        // console.log(err);
       },
     );
   };

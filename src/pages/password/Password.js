@@ -49,7 +49,7 @@ const Password = ({navigation, route}) => {
               console.log(res);
             },
             err => {
-              console.log(err);
+              // console.log(err);
             },
           );
         } else {

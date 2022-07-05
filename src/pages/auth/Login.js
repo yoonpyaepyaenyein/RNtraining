@@ -32,7 +32,6 @@ const Login = ({navigation}) => {
     if (title === 'Login') {
       getNext(title);
       navigation.navigate('Password', {email: email});
-      // console.log('next>>>',next)
     } else {
       getNext('Register');
       navigation.navigate('Password', {email: email});

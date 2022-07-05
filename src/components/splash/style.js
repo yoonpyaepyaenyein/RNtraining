@@ -7,27 +7,22 @@ import {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: 'rgba(127,127, 127, 0.6)',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  userImage: {
     width: wp(100),
     height: hp(100),
-    position: 'absolute',
   },
-  modalContainer: {
-    width: wp(65),
-    height: hp(15),
-    backgroundColor: '#fff',
-    borderRadius: hp(0.5),
-    flexDirection: 'row',
+  titleContainer: {
+    position: 'absolute',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingRight: hp(1),
-    // backgroundColor: '#D9FFD9',
   },
-  checkbox: {
-    margin: hp(1.3),
+  title: {
+    fontSize: hp(2.5),
+    color: '#74B873',
+    fontWeight: 'bold',
   },
 });
 
